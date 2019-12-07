@@ -21,6 +21,17 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(String first_name, String last_name, String title, String phone_number,
+                    String hire_date, Integer manager_id, Integer department_Key) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.title = title;
+        this.phone_number = phone_number;
+        this.hire_date = hire_date;
+        this.manager_id = manager_id;
+        this.department_Key = department_Key;
+    }
+
     public Employee(Integer employee_id, String first_name, String last_name, String title,
                     String phone_number, String hire_date, Integer manager_id, Integer department_Key) {
         this.employee_id = employee_id;
@@ -33,7 +44,8 @@ public class Employee {
         this.department_Key = department_Key;
     }
 
-    public Integer getEmployee_Number() {
+
+    public Integer getEmployee_id() {
         return employee_id;
     }
 
@@ -85,7 +97,7 @@ public class Employee {
         return manager_id;
     }
 
-    public void setManager(Integer manager_id) {
+    public void setManager_id(Integer manager_id) {
         this.manager_id = manager_id;
     }
 

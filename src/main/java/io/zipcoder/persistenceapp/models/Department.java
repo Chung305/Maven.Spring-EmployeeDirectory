@@ -1,9 +1,11 @@
 package io.zipcoder.persistenceapp.models;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class Department {
 
     @Id
@@ -15,11 +17,17 @@ public class Department {
     public Department() {
     }
 
+    public Department(String department_name, Integer manager_id) {
+        this.department_name = department_name;
+        this.manager_id = manager_id;
+    }
+
     public Department(Integer department_key, String department_name, Integer manager_id) {
         this.department_key = department_key;
         this.department_name = department_name;
         this.manager_id = manager_id;
     }
+
 
     public Integer getDepartment_key() {
         return department_key;
