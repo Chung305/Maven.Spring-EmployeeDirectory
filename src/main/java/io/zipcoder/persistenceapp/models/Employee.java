@@ -1,55 +1,49 @@
 package io.zipcoder.persistenceapp.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "EMPLOYEE_TABLE")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer employee_id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "EMPLOYEE_ID")
+    private Long employee_id;
+
+    @Column(name = "FIRST_NAME")
     private String first_name;
+
+    @Column(name = "LAST_NAME")
     private String last_name;
+
+    @Column(name = "TITLE")
     private String title;
+
+    @Column(name = "PHONE_NUMBER")
     private String phone_number;
+
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "HIRE_DATE")
     private String hire_date;
-    private Integer manager_id;
+
+    @Column(name = "MANAGER")
+    @Transient
+    private Employee manager;
+
+    @Column(name = "DEPARTMENT_KEY")
     private Integer department_Key;
 
     public Employee() {
     }
 
-    public Employee(String first_name, String last_name, String title, String phone_number,
-                    String hire_date, Integer manager_id, Integer department_Key) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.title = title;
-        this.phone_number = phone_number;
-        this.hire_date = hire_date;
-        this.manager_id = manager_id;
-        this.department_Key = department_Key;
-    }
-
-    public Employee(Integer employee_id, String first_name, String last_name, String title,
-                    String phone_number, String hire_date, Integer manager_id, Integer department_Key) {
-        this.employee_id = employee_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.title = title;
-        this.phone_number = phone_number;
-        this.hire_date = hire_date;
-        this.manager_id = manager_id;
-        this.department_Key = department_Key;
-    }
-
-
-    public Integer getEmployee_id() {
+    public Long getEmployee_id() {
         return employee_id;
     }
 
-    public void setEmployee_Number(Integer employee_id) {
+    public void setEmployee_id(Long employee_id) {
         this.employee_id = employee_id;
     }
 
@@ -85,6 +79,14 @@ public class Employee {
         this.phone_number = phone_number;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getHire_date() {
         return hire_date;
     }
@@ -93,12 +95,12 @@ public class Employee {
         this.hire_date = hire_date;
     }
 
-    public Integer getManager() {
-        return manager_id;
+    public Employee getManager() {
+        return manager;
     }
 
-    public void setManager_id(Integer manager_id) {
-        this.manager_id = manager_id;
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 
     public Integer getDepartment_Key() {

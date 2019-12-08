@@ -1,39 +1,30 @@
 package io.zipcoder.persistenceapp.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer department_key;
+    @Column(name = "DEPARTMENT_KEY")
+    private Long department_key;
+
+    @Column(name = "DEPARTMENT_NAME")
     private String department_name;
-    private Integer manager_id;
+
+    @Column(name = "MANAGER")
+    @Transient
+    private Employee manager;
 
     public Department() {
     }
 
-    public Department(String department_name, Integer manager_id) {
-        this.department_name = department_name;
-        this.manager_id = manager_id;
-    }
-
-    public Department(Integer department_key, String department_name, Integer manager_id) {
-        this.department_key = department_key;
-        this.department_name = department_name;
-        this.manager_id = manager_id;
-    }
-
-
-    public Integer getDepartment_key() {
+    public Long getDepartment_key() {
         return department_key;
     }
 
-    public void setDepartment_key(Integer department_key) {
+    public void setDepartment_key(Long department_key) {
         this.department_key = department_key;
     }
 
@@ -45,11 +36,11 @@ public class Department {
         this.department_name = department_name;
     }
 
-    public Integer getManager() {
-        return manager_id;
+    public Employee getManager() {
+        return manager;
     }
 
-    public void setManager(Integer manager_id) {
-        this.manager_id = manager_id;
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 }

@@ -1,6 +1,6 @@
 package io.zipcoder.persistenceapp.Controller;
 
-import io.zipcoder.persistenceapp.Service.DirectoryService;
+import io.zipcoder.persistenceapp.Service.EmployeeService;
 import io.zipcoder.persistenceapp.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DirectoryController {
+public class EmployeeController {
 
     @Autowired
-    private DirectoryService directoryService;
+    private EmployeeService employeeService;
 
-    @PostMapping("/API/employee")
-    public ResponseEntity<Employee> createEmployee (@RequestBody Employee employee){
-        return new ResponseEntity<>(directoryService.createEmployee(employee), HttpStatus.CREATED);
+    @PostMapping("/api/employee")
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee e){
+        return new ResponseEntity<>(employeeService.create(e), HttpStatus.CREATED);
     }
-
 }
