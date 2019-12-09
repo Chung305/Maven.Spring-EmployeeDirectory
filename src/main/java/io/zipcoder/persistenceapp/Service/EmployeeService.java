@@ -1,7 +1,9 @@
 package io.zipcoder.persistenceapp.Service;
 
 
+import io.zipcoder.persistenceapp.models.Department;
 import io.zipcoder.persistenceapp.models.Employee;
+import io.zipcoder.persistenceapp.repository.DepartmentRepository;
 import io.zipcoder.persistenceapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     //create employee
     public Employee create(Employee e){
@@ -49,6 +54,32 @@ public class EmployeeService {
         }
         return underManager;
     }
+
+    //get all employees with no manager
+    public List<Employee> findAllWithNoManager(){
+        Iterable<Employee> allEmployee = employeeRepository.findAll();
+        List<Employee> listOfEmployeeWithNoManager = new ArrayList<>();
+        for(Employee each : allEmployee){
+            if(each.getManager() == null)
+                listOfEmployeeWithNoManager.add(each);
+        }
+        return listOfEmployeeWithNoManager;
+    }
+
+    //get employees from a particular department
+    public Iterable<Employee> findAllByDepartment(int id){
+        return employeeRepository.findAllByDepartment_Key(id);
+    }
+
+    //stuckk HERE
+    public List<Employee> findAllInOrDiToManager(int id){
+        List<Employee> reportToList = new ArrayList<>();
+        Iterable<Department> departmentIterable = departmentRepository.findAll();
+
+        return null;
+    }
+
+
 
 
 

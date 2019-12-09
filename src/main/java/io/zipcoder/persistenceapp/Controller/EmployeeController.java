@@ -34,4 +34,17 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> findAllUnderManager(@PathVariable int id){
         return new ResponseEntity<>(employeeService.findAllUnderManager(id), HttpStatus.OK);
     }
+
+    //heirarchy for an employee missing
+
+    @GetMapping("/api/employee_with_no_mananger")
+    public ResponseEntity<List<Employee>> findAllWithNoManager(){
+        return new ResponseEntity<>(employeeService.findAllWithNoManager(), HttpStatus.OK);
+    }
+
+    @GetMapping("api/employee/department/{id}")
+    public ResponseEntity<Iterable<Employee>> findAllByDepartment(@PathVariable int id){
+        return new ResponseEntity<>(employeeService.findAllByDepartment(id), HttpStatus.OK);
+    }
+
 }
