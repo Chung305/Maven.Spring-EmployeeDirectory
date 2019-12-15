@@ -14,17 +14,19 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/api/department")
-    public ResponseEntity<Department> create (@RequestBody Department d){
-        return new ResponseEntity<>(departmentService.create(d), HttpStatus.CREATED);
+    public ResponseEntity<Department> createDepartment(@RequestBody Department d){
+        return new ResponseEntity<>(departmentService.createDepartment(d), HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/department/{id}/update")
-    public ResponseEntity<Department> update (@PathVariable int id, @RequestBody int managerId){
-        return new ResponseEntity<>(departmentService.update(id, managerId), HttpStatus.OK);
+    @PutMapping("/api/department/{id}/updateManager/{mId}")
+    public ResponseEntity<Department> updateDepartmentManager(@PathVariable Long id, @PathVariable Long mId){
+        return new ResponseEntity<>(departmentService.updateDepartmentManager(id, mId), HttpStatus.OK);
     }
 
-    @PutMapping("/api/department/{id}/update_name")
-    public ResponseEntity<Department> update (@PathVariable int id, @RequestBody String name){
-        return new ResponseEntity<>(departmentService.update(id, name), HttpStatus.OK);
+    @PutMapping("/api/department/{id}/nameUpdate")
+    public ResponseEntity<Department> updateDepartmentName(@PathVariable Long id, @RequestBody String name){
+        return new ResponseEntity<>(departmentService.updateDepartmentName(id, name), HttpStatus.OK);
     }
+
+
 }

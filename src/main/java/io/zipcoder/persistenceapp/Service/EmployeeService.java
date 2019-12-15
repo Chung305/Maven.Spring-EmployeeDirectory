@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,67 +17,55 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
-
-    //create employee
-    public Employee create(Employee e){
-        return employeeRepository.save(e);
+    public Employee findEmployeeById(Long id){
+        return employeeRepository.findOne(id);
     }
 
-    //update manager of employee
-    public Employee update(int id, int managerId){
-        Employee e = employeeRepository.findOne(id);
-        e.setManager(employeeRepository.findOne(managerId));
-        return employeeRepository.save(e);
-    }
+    public Employee createEmployee(Employee employee){
+        Employee newEmployee = new Employee();
+        newEmployee.setFirst_name(employee.getFirst_name());
+        newEmployee.setLast_name(employee.getLast_name());
+        newEmployee.setTitle(employee.getTitle());
+        newEmployee.setPhone_number(employee.getPhone_number());
+        newEmployee.setEmail(employee.getEmail());
+        newEmployee.setHire_date(new Date());
 
-    //update employee fields
-    public Employee update (int id, Employee employee){
-        Employee e = employeeRepository.findOne(id);
-        e.setFirst_name(employee.getFirst_name());
-        e.setLast_name(employee.getLast_name());
-        e.setTitle(employee.getTitle());
-        e.setPhone_number(employee.getPhone_number());
-        e.setEmail(employee.getEmail());
-        e.setHire_date(employee.getHire_date());
-        e.setDepartment_Key(employee.getDepartment_Key());
-        return employeeRepository.save(e);
-    }
+        return employeeRepository.save(newEmployee);
 
-    //get all employees under a manager
-    public List<Employee> findAllUnderManager(int id){
-        Iterable<Employee> list = employeeRepository.findAll();
-        List<Employee> underManager = new ArrayList<>();
-        for(Employee each : list){
-            if(each.getManager().equals(employeeRepository.findOne(id)))
-                underManager.add(each);
+    }
+     public Boolean updateEmployee(Long employeeId, Long managerId){
+        try{
+            verifyEmployee(employeeId);
+            Employee updateEmployee = employeeRepository.findOne(employeeId);
+            updateEmployee.setManager(employeeRepository.findOne(managerId));
+            employeeRepository.save(updateEmployee);
+            return true;
+        }catch(IllegalArgumentException e){
+            e.printStackTrace();
         }
-        return underManager;
-    }
+        return false;
+     }
 
-    //get all employees with no manager
-    public List<Employee> findAllWithNoManager(){
-        Iterable<Employee> allEmployee = employeeRepository.findAll();
-        List<Employee> listOfEmployeeWithNoManager = new ArrayList<>();
-        for(Employee each : allEmployee){
-            if(each.getManager() == null)
-                listOfEmployeeWithNoManager.add(each);
-        }
-        return listOfEmployeeWithNoManager;
-    }
+     public Employee updateEmployee(Long id, Employee employee) {
+         Employee updated = findEmployeeById(id);
+         updated.setFirst_name(employee.getFirst_name());
+         updated.setLast_name(employee.getLast_name());
+         updated.setTitle(employee.getTitle());
+         updated.setPhone_number(employee.getPhone_number());
+         updated.setEmail(employee.getEmail());
 
-    //get employees from a particular department
-    public Iterable<Employee> findAllByDepartment(int id){
-        return employeeRepository.findAllByDepartment_Key(id);
-    }
-
-    //stuckk HERE
-    public List<Employee> findAllInOrDiToManager(int id){
-        List<Employee> reportToList = new ArrayList<>();
-        Iterable<Department> departmentIterable = departmentRepository.findAll();
-
+         return employeeRepository.save(updated);
+     }
+     ////IM HERE BRO
+     public List<Employee> listUnderAManager (Long id){
         return null;
+     }
+
+
+    public void verifyEmployee(Long employeeId) {
+        if(!employeeRepository.exists(employeeId))   {
+            throw new IllegalArgumentException("not found");
+        }
     }
 
 

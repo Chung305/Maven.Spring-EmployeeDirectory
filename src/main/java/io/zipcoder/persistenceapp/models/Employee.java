@@ -2,49 +2,32 @@ package io.zipcoder.persistenceapp.models;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "EMPLOYEE_TABLE")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "EMPLOYEE_ID")
-    private Long employee_id;
-
-    @Column(name = "FIRST_NAME")
+    private Long id;
     private String first_name;
-
-    @Column(name = "LAST_NAME")
     private String last_name;
-
-    @Column(name = "TITLE")
     private String title;
-
-    @Column(name = "PHONE_NUMBER")
     private String phone_number;
-
-    @Column(name = "EMAIL")
     private String email;
-
-    @Column(name = "HIRE_DATE")
-    private String hire_date;
-
-    @Column(name = "MANAGER")
-    @Transient
+    private Date hire_date;
+    @ManyToOne
     private Employee manager;
-
-    @Column(name = "DEPARTMENT_KEY")
-    private Integer department_Key;
+    private Long departmentKey;
 
     public Employee() {
     }
 
-    public Long getEmployee_id() {
-        return employee_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setEmployee_id(Long employee_id) {
-        this.employee_id = employee_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {
@@ -87,11 +70,11 @@ public class Employee {
         this.email = email;
     }
 
-    public String getHire_date() {
+    public Date getHire_date() {
         return hire_date;
     }
 
-    public void setHire_date(String hire_date) {
+    public void setHire_date(Date hire_date) {
         this.hire_date = hire_date;
     }
 
@@ -103,11 +86,11 @@ public class Employee {
         this.manager = manager;
     }
 
-    public Integer getDepartment_Key() {
-        return department_Key;
+    public Long getDepartmentKey() {
+        return departmentKey;
     }
 
-    public void setDepartment_Key(Integer department_Key) {
-        this.department_Key = department_Key;
+    public void setDepartmentKey(Long departmentKey) {
+        this.departmentKey = departmentKey;
     }
 }

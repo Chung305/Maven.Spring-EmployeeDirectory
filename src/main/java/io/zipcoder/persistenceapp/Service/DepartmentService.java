@@ -15,22 +15,25 @@ public class DepartmentService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    //creating department
-    public Department create(Department d){
+    public Department createDepartment(Department department){
+        Department d = new Department();
+        d.setDepartmentName(department.getDepartmentName());
         return departmentRepository.save(d);
     }
 
-    //update Department manager
-    public Department update(int id, int manager){
+    public Department updateDepartmentManager(Long id, Long managerId){
         Department updated = departmentRepository.findOne(id);
-        updated.setManager(employeeRepository.findOne(manager));
+        updated.setManager(employeeRepository.findOne(managerId));
+
+        return departmentRepository.save(updated);
+
+    }
+
+    public Department updateDepartmentName(Long id, String name){
+        Department updated = departmentRepository.findOne(id);
+        updated.setDepartmentName(name);
         return departmentRepository.save(updated);
     }
 
-    //update department name
-    public Department update(int id, String name){
-        Department updated = departmentRepository.findOne(id);
-        updated.setDepartment_name(name);
-        return departmentRepository.save(updated);
-    }
+
 }

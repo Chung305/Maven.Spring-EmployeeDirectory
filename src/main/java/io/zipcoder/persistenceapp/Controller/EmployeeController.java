@@ -15,36 +15,23 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @GetMapping("/api/employee/{id}")
+    public ResponseEntity<Employee> findEmployeeById (@PathVariable Long id){
+        return new ResponseEntity<>(employeeService.findEmployeeById(id), HttpStatus.OK);
+    }
     @PostMapping("/api/employee")
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee e){
-        return new ResponseEntity<>(employeeService.create(e), HttpStatus.CREATED);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee){
+        return new ResponseEntity<>(employeeService.createEmployee(employee), HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/employee/{id}/update_manager")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody int managerId){
-        return new ResponseEntity<>(employeeService.update(id, managerId), HttpStatus.OK);
+    @PutMapping("/api/employee/{id}/setManager/{mId}")
+    public ResponseEntity<Boolean> updateEmployee(@PathVariable Long mId, @PathVariable Long id){
+        return new ResponseEntity<>(employeeService.updateEmployee(id, mId), HttpStatus.OK);
     }
 
     @PutMapping("/api/employee/{id}/update")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody Employee e){
-        return new ResponseEntity<>(employeeService.update(id, e), HttpStatus.OK);
-    }
-
-    @GetMapping("/api/employee/{id}/employee_list_{id}")
-    public ResponseEntity<List<Employee>> findAllUnderManager(@PathVariable int id){
-        return new ResponseEntity<>(employeeService.findAllUnderManager(id), HttpStatus.OK);
-    }
-
-    //heirarchy for an employee missing
-
-    @GetMapping("/api/employee_with_no_mananger")
-    public ResponseEntity<List<Employee>> findAllWithNoManager(){
-        return new ResponseEntity<>(employeeService.findAllWithNoManager(), HttpStatus.OK);
-    }
-
-    @GetMapping("api/employee/department/{id}")
-    public ResponseEntity<Iterable<Employee>> findAllByDepartment(@PathVariable int id){
-        return new ResponseEntity<>(employeeService.findAllByDepartment(id), HttpStatus.OK);
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee e){
+        return new ResponseEntity<>(employeeService.updateEmployee(id, e), HttpStatus.OK);
     }
 
 }
